@@ -1,16 +1,15 @@
 FROM osrm/osrm-backend
 
-COPY ontario-latest.osm.pbf ontario-latest.osm.pbf
-RUN mkdir profiles
-COPY car.lua /profiles/car.lua
+RUN mkdir /app
+COPY ["./car.lua", "/app/car.lua"]
+COPY ["./ontario-latest.osrm", "/app/ontario-latest.osm.pbf"]
 
-RUN ls -s profiles/car.lua
-RUN ls -s lib
+WORKDIR /app
 
-RUN osrm-extract alberta-latest.osm.pbf
-RUN osrm-contract alberta-latest.osrm
+RUN osrm-extract -p /app/car.lua /app/ontario-latest.osm.pbf
+RUN osrm-partition /app/ontario-latest.osm.pbf
+RUN osrm-customize /app/ontario-latest.osm.pbf
 
-EXPOSE 5000
+EXPOSE 8080
 
-ENTRYPOINT ["osrm-routed", "alberta-latest.osrm"]
-
+CMD ["osrm-routed", "--algorithm", "mld", "/app/ontario-latest.osrm"]
