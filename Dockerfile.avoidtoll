@@ -6,7 +6,7 @@ RUN apt install wget -y
 RUN wget http://download.geofabrik.de/north-america/canada/alberta-latest.osm.pbf
 
 RUN mkdir custom_profile
-COPY ["./car.lua", "/custom_profile/car.lua"]
+COPY ["./car_avoidtoll.lua", "/custom_profile/car.lua"]
 
 RUN osrm-extract -p /custom_profile/car.lua ontario-latest.osm.pbf
 RUN osrm-partition ontario-latest.osm.pbf

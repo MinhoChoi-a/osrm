@@ -1,0 +1,17 @@
+version: "1.0"
+
+services:
+  default:
+    container_name: osrm_default
+    build:
+      context: .
+      dockerfile: Dockerfile.default
+    ports:
+      - "81:5000"
+  avoidtoll:
+    container_name: osrm_avoidtoll
+    build:
+      context: .
+      dockerfile: Dockerfile.avoidtoll
+    ports:
+      - "82:5000"
