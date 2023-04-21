@@ -14,13 +14,13 @@ sudo echo "deb-src http://nginx.org/packages/ubuntu "$(. /etc/os-release && echo
 
 sudo apt-get update
 sudo apt-get install nginx
+sudo systemctl start nginx.service
 
 cd /etc/nginx/conf.d
 sudo mv ./default.conf ./default.conf.bak
 sudo touch ./server1.conf
 sudo echo "server { root /home/ubuntu/public_html; location /osrm/route/default { proxy_pass http://localhost:5000/route/v1/driving; } location /osrm/route/avoidtoll { proxy_pass http://localhost:5001/route/v1/driving; } }" > ./server1.conf
-
-sudo systemctl start nginx.service
+sudo nginx -s reload
 
 cd ~
 sudo apt-get install ca-certificates curl gnupg
