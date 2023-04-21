@@ -1,0 +1,17 @@
+FROM osrm/osrm-backend
+
+RUN apt update -y
+RUN apt install wget -y
+
+RUN wget http://download.geofabrik.de/north-america/canada/alberta-latest.osm.pbf
+
+RUN mkdir custom_profile
+COPY ["./car_default.lua", "/custom_profile/car.lua"]
+
+RUN osrm-extract -p /custom_profile/car.lua ontario-latest.osm.pbf
+RUN osrm-partition ontario-latest.osm.pbf
+RUN osrm-customize ontario-latest.osm.pbf
+
+EXPOSE 5000
+
+CMD ["osrm-routed", "--algorithm", "mld", "ontario-latest.osrm"]
