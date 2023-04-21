@@ -16,9 +16,9 @@ sudo apt-get update
 sudo apt-get install nginx
 
 cd /etc/nginx/conf.d
-sudo mv default.conf default.conf.bak
-sudo touch server1.conf
-sudo echo "server { root /home/ubuntu/public_html; location /osrm/route/default { proxy_pass http://localhost:5000/route/v1/driving; } location /osrm/route/avoidtoll { proxy_pass http://localhost:5001/route/v1/driving; } }" > server1.conf
+sudo mv ./default.conf ./default.conf.bak
+sudo touch ./server1.conf
+sudo echo "server { root /home/ubuntu/public_html; location /osrm/route/default { proxy_pass http://localhost:5000/route/v1/driving; } location /osrm/route/avoidtoll { proxy_pass http://localhost:5001/route/v1/driving; } }" > ./server1.conf
 
 sudo systemctl start nginx.service
 
@@ -29,6 +29,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 
 echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 sudo mkdir /home/ubuntu/osrm_docker
