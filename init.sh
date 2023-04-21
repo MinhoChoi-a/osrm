@@ -1,29 +1,29 @@
 #sudo apt install git-all
 #git clone https://github.com/MinhoChoi-a/osrm.git
+#sudo systemctl stop apache2
 #cd /home/ubuntu/osrm
-#sudo git pull
 #sudo chmod +x ./init.sh
 #sudo mv ./init.sh /home/ubuntu/init.sh
 
 #!/bin/bash
 
 #sudo apt-get update
-sudo wget http://nginx.org/keys/nginx_signing.key
-sudo apt-key add nginx_signing.key
-
-cd /etc/apt
-sudo echo "deb http://nginx.org/packages/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" nginx" >> ./sources.list
-sudo echo "deb-src http://nginx.org/packages/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" nginx" >> ./sources.list
-
-sudo apt-get update
-sudo apt-get install nginx
-sudo systemctl start nginx.service
+#sudo wget http://nginx.org/keys/nginx_signing.key
+#sudo apt-key add nginx_signing.key
 #
-cd /etc/nginx/conf.d
-sudo mv ./default.conf ./default.conf.bak
-sudo touch ./server1.conf
-sudo echo "server { root /home/ubuntu/public_html; location /osrm/route/default { proxy_pass http://localhost:5000/route/v1/driving; } location /osrm/route/avoidtoll { proxy_pass http://localhost:5001/route/v1/driving; } }" > ./server1.conf
-sudo nginx -s reload
+#cd /etc/apt
+#sudo echo "deb http://nginx.org/packages/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" nginx" >> ./sources.list
+#sudo echo "deb-src http://nginx.org/packages/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" nginx" >> ./sources.list
+#
+#sudo apt-get update
+#sudo apt-get install nginx
+#sudo systemctl start nginx.service
+##
+#cd /etc/nginx/conf.d
+#sudo mv ./default.conf ./default.conf.bak
+#sudo touch ./server1.conf
+#sudo echo "server { root /home/ubuntu/public_html; location /osrm/route/default { proxy_pass http://localhost:5000/route/v1/driving; } location /osrm/route/avoidtoll { proxy_pass http://localhost:5001/route/v1/driving; } }" > ./server1.conf
+#sudo nginx -s reload
 
 #
 #cd ~
@@ -51,3 +51,9 @@ sudo nginx -s reload
 
 #cd /home/ubuntu/osrm_docker/default
 #sudo docker build -t osrm-default .
+
+#cd /home/ubuntu/osrm_docker/avoidtoll
+#sudo docker build -t osrm-avoidtoll .
+
+#sudo docker run -p 5000:5005 osrm-default
+#sudo docker run -p 5005:5005 osrm-avoidtoll
