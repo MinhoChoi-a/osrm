@@ -2,6 +2,8 @@
 #git clone https://github.com/MinhoChoi-a/osrm.git
 #cd /home/ubuntu/osrm
 #sudo git pull
+#sudo chmod +x ./init.sh
+#sudo mv ./init.sh /home/ubuntu/init.sh
 
 sudo wget http://nginx.org/keys/nginx_signing.key
 sudo apt-key add nginx_signing.key
@@ -16,7 +18,7 @@ sudo apt-get install nginx
 cd /etc/nginx/conf.d
 sudo mv default.conf default.conf.bak
 sudo touch server1.conf
-sudo echo "server { root /home/ubuntu/public_html; location /osrm/route/default { proxy_pass http://localhost:5000/route/v1/driving; }; location /osrm/route/avoidtoll { proxy_pass http://localhost:5001/route/v1/driving; }; }" > server1.conf
+sudo echo "server { root /home/ubuntu/public_html; location /osrm/route/default { proxy_pass http://localhost:5000/route/v1/driving; } location /osrm/route/avoidtoll { proxy_pass http://localhost:5001/route/v1/driving; } }" > server1.conf
 
 sudo systemctl start nginx.service
 
@@ -36,8 +38,11 @@ sudo mkdir /home/ubuntu/osrm_docker/avoidtoll
 sudo cp /home/ubuntu/osrm/default/car.lua /home/ubuntu/osrm_docker/default/car.lua
 sudo cp /home/ubuntu/osrm/avoidtoll/car.lua /home/ubuntu/osrm_docker/avoidtoll/car.lua
 
+sudo cp /home/ubuntu/osrm/default/Dockerfile /home/ubuntu/osrm_docker/default/Dockerfile
+sudo cp /home/ubuntu/osrm/avoidtoll/Dockerfile /home/ubuntu/osrm_docker/avoidtoll/Dockerfile
+
 cd /home/ubuntu/osrm_docker
 wget http://download.geofabrik.de/north-america/canada/ontario-latest.osm.pbf
 
-cd /home/ubuntu/osrm_docker/default
-sudo docker build -t osrm-default .
+#cd /home/ubuntu/osrm_docker/default
+#sudo docker build -t osrm-default .
